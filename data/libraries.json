@@ -3064,8 +3064,7 @@
                             "icon": "apps/apps_profiling.svg"
                         }
                     },
-                
-                
+
                     {
                         "id"   : "apps_sample",
                         "type" : "function",
@@ -3080,9 +3079,7 @@
                             "icon": "apps/apps_white.svg"
                         }
                     }
-
-
-
+                    
                 ]
             },
             {
