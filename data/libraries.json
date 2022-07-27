@@ -3054,13 +3054,13 @@
                         "id"   : "apps_profiling",
                         "type" : "function",
                         "level": 1,
-                        "name" : "Profiling",
+                        "name" : "test_Profiling",
                         "tag"  : "PROFILING,PANDAS PROFILING,APPS",
                         "path" : "visualpython - apps - profiling",
                         "desc" : "Pandas Profiling",
                         "file" : "m_apps/Profiling",
                         "apps" : {
-                            "color": 4,
+                            "color": 1,
                             "icon": "apps/apps_profiling.svg"
                         }
                     },
