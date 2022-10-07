@@ -12,6 +12,19 @@
 //============================================================================
 // [CLASS] PopupComponent
 //============================================================================
+// import {admin} from 'data/test.js';
+// console.log(admin.name); // Pete
+
+
+// import {sayHi, sayBye} from '/home/ubuntu/.local/share/jupyter/nbextensions/visualpython/data/test.js';
+// import { validator } from "/home/ubuntu/.local/share/jupyter/nbextensions/visualpython/data/test.js"
+
+//import add from '/home/ubuntu/.local/share/jupyter/nbextensions/visualpython/data/a.js';
+
+//console.log(add(10, 20));
+
+
+
 define([
     'text!vp_base/html/component/popupComponent.html!strip',
     'css!vp_base/css/component/popupComponent.css',
@@ -23,8 +36,10 @@ define([
     './DataSelector',
     
     // helpview boolean 판단
-    'json!vp_base/data/help_data.json',
-
+    // 'json!vp_base/data/help_data.json',
+    //'text!vp_base/data/test.js',
+    'vp_base/data/help/help',
+    
     
     /** codemirror */
     'codemirror/lib/codemirror',
@@ -32,10 +47,19 @@ define([
     'notebook/js/codemirror-ipython',
     'codemirror/addon/display/placeholder',
     'codemirror/addon/display/autorefresh'
+    
+
+
+// ], function(popupComponentHtml, popupComponentCss
+//     , com_util, com_Const, com_String, com_interface, Component, DataSelector, helpData, codemirror, HELP
+// ) {
+
+
 ], function(popupComponentHtml, popupComponentCss
-    , com_util, com_Const, com_String, com_interface, Component, DataSelector, helpData, codemirror
+    , com_util, com_Const, com_String, com_interface, Component, DataSelector,HELP, codemirror
 ) {
     'use strict';
+    
 
     //========================================================================
     // Declare class
@@ -43,17 +67,39 @@ define([
     /**
      * Component
      */
+    
     class PopupComponent extends Component {
         constructor(state={ config: { id: 'popup', name: 'Popup title', path: 'path/file' }}, prop={}) {
             super($('#site'), state, prop);
         }
+        
+        
 
         _init() {
             this.eventTarget = '#vp_wrapper';
             this.id = this.state.config.id;
             this.name = this.state.config.name;
             this.path = this.state.config.path;
-            
+            //this.test = this.state.config.test;
+
+
+
+
+            this.state = {
+                loadType: 'Subset',
+    
+            //     userOption: '',
+            //     allocateTo: 'ldata',
+                ...this.state
+            }
+
+            this.allHelp = HELP;
+            this.loadTypeList = {
+                'helpdata': [
+                    'File', 'Subset'
+                ]
+            }
+
             
             this.config = {
                 sizeLevel: 0,          // 0: 400x400 / 1: 500x500 / 2: 600x500 / 3: 750x500
@@ -67,8 +113,12 @@ define([
                 dataview: true,
 
                 // 220919
-                helpview: helpData[this.name],
+                // helpview: helpData[this.id],    
+                //helpview: helpData[user.name],    
 
+                helpview: true,    
+
+                
                 // show footer
                 runButton: true,
                 footer: true,
@@ -199,7 +249,7 @@ define([
 
             // 220919
             // 220912
-            // code view + helpview 
+            // code view + helpview             
             if (this.config.codeview) {
                 if (!this.cmCodeview) {
                     // codemirror setting
@@ -431,8 +481,12 @@ define([
                         // }
                         if ($(that.wrapSelector('.vp-popup-helpview-box')).is(':hidden')) {
                             that.openView('help');
+
                         } else {
                             that.closeView('help');
+
+
+
                         }
                         evt.stopPropagation();
                         break;
@@ -725,10 +779,17 @@ define([
         }
     
         generateHelp() {
-            var helpTextObj = new com_String();
-            var helpComment = helpData[this.name];
-            helpTextObj.append(helpComment);
 
+            var helpTextObj = new com_String();     
+            let config = this.allHelp['Subset'];
+            helpTextObj.append(config.import);
+            helpTextObj.append();
+
+            // var helpComment = helpData[this.name];            
+            // helpTextObj.append(helpComment);
+            console.log(helpTextObj);
+
+            
             return helpTextObj.toString();
         }
 
